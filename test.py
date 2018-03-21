@@ -8,16 +8,24 @@ def print_all(x):
     print('-------')
 
 
+x = FileFinder.get_files()
+print("Get files")
+print_all(x)
+
 x = FileFinder.get_all_files()
+print("Get all files:")
 print_all(x)
 
 x = FileFinder.get_all_files(extension='py')
+print("Get all files (python extension):")
 print_all(x)
 
 x = FileFinder.get_dirs()
+print("Get dirs:")
 print_all(x)
 
 x = FileFinder.get_all_dirs()
+print("Get all dirs:")
 print_all(x)
 
 
