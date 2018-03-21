@@ -2,7 +2,7 @@ from os import listdir
 from os.path import isfile, sep, join
 
 
-# Gets the files of a directory, if no directory is passed gets root dir
+# Gets the files of a directory
 def get_files(path='', extension=''):
     only_files = []
     if(path):
@@ -28,25 +28,7 @@ def get_files(path='', extension=''):
     return only_files
 
 
-# Gets the directories in a path, if no directory is passed gets root dir
-def get_dirs(path=''):
-    only_dirs = []
-    if(path):
-        files = listdir(path)
-    else:
-        files = listdir()
-
-    for f in files:
-        if(path):
-            f = join(path, f)
-        # Checks if it's a file, if not appends to directories
-        if not isfile(f):
-            only_dirs.append(f)
-
-    return only_dirs
-
-
-# Get all the files in current or specified path
+# Get all the files in current path and child folders
 def get_all_files(path='.', extension=''):
     files = []
     dirs = []
@@ -74,7 +56,25 @@ def get_all_files(path='.', extension=''):
     return files
 
 
-# Get all the files in current or specified path
+# Gets the directories in a path
+def get_dirs(path=''):
+    only_dirs = []
+    if(path):
+        files = listdir(path)
+    else:
+        files = listdir()
+
+    for f in files:
+        if(path):
+            f = join(path, f)
+        # Checks if it's a file, if not appends to directories
+        if not isfile(f):
+            only_dirs.append(f)
+
+    return only_dirs
+
+
+# Get all the directories in current path and child folders
 def get_all_dirs(path='.'):
     files = []
     dirs = []
