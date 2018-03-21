@@ -1,5 +1,5 @@
 # FileFinder
-Really simple utilities for finding filenames and dirs in a specified or local directory. Lets us rename files en masse as well.
+A really simple module for finding filenames and dirs in a specified or local directory. There's a thing to let us rename files en masse as well.
 
 What I like to do is create a symlink from the file in github to my site-packages folder. You can find your site-packages folder with:
 
