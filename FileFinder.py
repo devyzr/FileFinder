@@ -1,29 +1,23 @@
-from os import listdir
-from os.path import isfile, sep, join
+from os import listdir, rename
+from os.path import isfile, sep
 
 
 # Gets the files of a directory
-def get_files(path='', extension=''):
+def get_files(path='.', extension=''):
     only_files = []
-    if(path):
-        files = listdir(path)
-    else:
-        files = listdir()
 
-    for f in files:
-        if(path):
-            f = join(path, f)
-        # Checks if it's a file
-        if isfile(f):
-            str_f = str(f)
-            # Check for extension if specified, if not we append the file
-            if(extension):
-                ext = str_f.split('.')
-                ext = ext[-1]
-                if extension == ext:
-                    only_files.append(f)
+    for item in listdir(path):
+        if path[-1] == sep:
+            path = path[:-1]
+        full_path = path + sep + item
+
+        if isfile(full_path):
+            if extension:
+                f_ext = item.split('.')
+                if f_ext[-1] == extension:
+                    only_files.append(full_path)
             else:
-                only_files.append(f)
+                only_files.append(full_path)
 
     return only_files
 
@@ -34,6 +28,8 @@ def get_all_files(path='.', extension=''):
     dirs = []
 
     for item in listdir(path):
+        if path[-1] == sep:
+            path = path[:-1]
         full_path = path + sep + item
         dirs.append(full_path)
 
@@ -57,19 +53,15 @@ def get_all_files(path='.', extension=''):
 
 
 # Gets the directories in a path
-def get_dirs(path=''):
+def get_dirs(path='.'):
     only_dirs = []
-    if(path):
-        files = listdir(path)
-    else:
-        files = listdir()
 
-    for f in files:
-        if(path):
-            f = join(path, f)
-        # Checks if it's a file, if not appends to directories
-        if not isfile(f):
-            only_dirs.append(f)
+    for item in listdir(path):
+        if path[-1] == sep:
+            path = path[:-1]
+        full_path = path + sep + item
+        if not isfile(full_path):
+            only_dirs.append(full_path)
 
     return only_dirs
 
@@ -80,6 +72,8 @@ def get_all_dirs(path='.'):
     dirs = []
 
     for item in listdir(path):
+        if path[-1] == sep:
+            path = path[:-1]
         full_path = path + sep + item
         files.append(full_path)
 
@@ -87,10 +81,23 @@ def get_all_dirs(path='.'):
         elem = files.pop()
 
         if not isfile(elem):
-            dirs.append(elem + sep)
+            dirs.append(elem)
             more_dirs = listdir(elem)
             for e in more_dirs:
                 full_path = elem + sep + e
                 files.append(full_path)
 
     return dirs
+
+
+def rename_all_files(path, src_ext, dst_ext):
+    list_of_files = get_all_files(path, src_ext)
+    renamed_files = []
+    for f in list_of_files:
+        split_f = f.rsplit('.', 1)
+        joined_f = split_f[:-1]
+        joined_f.append(dst_ext)
+        joined_f = '.'.join(joined_f)
+        rename(f, joined_f)
+        renamed_files.append([f, joined_f])
+    return renamed_files
