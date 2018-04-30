@@ -93,16 +93,23 @@ def get_all_dirs(path='.'):
 def rename_all_files(path, src_ext, dst_ext, override=False):
     # Override is used in case we accidentally set a src extension to null,
     # this will stop the code from renaming all files to a specific extension.
-    if src_ext != '' and override is True:
-        list_of_files = get_all_files(path, src_ext)
-        renamed_files = []
-        for f in list_of_files:
-            split_f = f.rsplit('.', 1)
-            joined_f = split_f[:-1]
-            joined_f.append(dst_ext)
-            joined_f = '.'.join(joined_f)
-            rename(f, joined_f)
-            renamed_files.append([f, joined_f])
-        return renamed_files
+    if src_ext != '':
+        pass
+    elif override is True:
+        pass
     else:
+        print('You are trying to rename all files in a directory to a specific'
+              ' extension, this is prevented for safety reasons. To avoid this'
+              ' behaviour use the \'override=False\' argument.')
         return None
+
+    list_of_files = get_all_files(path, src_ext)
+    renamed_files = []
+    for f in list_of_files:
+        split_f = f.rsplit('.', 1)
+        joined_f = split_f[:-1]
+        joined_f.append(dst_ext)
+        joined_f = '.'.join(joined_f)
+        rename(f, joined_f)
+        renamed_files.append([f, joined_f])
+    return renamed_files
