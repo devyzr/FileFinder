@@ -13,8 +13,8 @@ def get_files(path='.', extension=''):
 
         if isfile(full_path):
             if extension:
-                f_ext = item.split('.')
-                if f_ext[-1] == extension:
+                f_ext = item[-len(extension):]
+                if f_ext == extension:
                     only_files.append(full_path)
             else:
                 only_files.append(full_path)
@@ -38,7 +38,7 @@ def get_all_files(path='.', extension=''):
 
         if isfile(elem):
             if extension:
-                ext = elem.split('.')[-1]
+                ext = elem[-len(extension):]
                 if ext == extension:
                     files.append(elem)
             else:
